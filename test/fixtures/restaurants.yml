@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  type: 1
+  rate: 1.5
+  address: MyString
+  image_path: MyString
+  business_hours: MyString
+  phone_number: MyString
+  regular_holiday: MyString
+  link: MyString
+
+two:
+  name: MyString
+  type: 1
+  rate: 1.5
+  address: MyString
+  image_path: MyString
+  business_hours: MyString
+  phone_number: MyString
+  regular_holiday: MyString
+  link: MyString
