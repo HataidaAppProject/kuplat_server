@@ -2,6 +2,12 @@ class API < Grape::API
   prefix :api
   version 'v1', using: :path
   format :json
+
+  module Categories
+    circles = 1
+    recruitings = 2
+    seminars = 3
+  end
   # 以下にAPIを書いていく
   # ホーム画面用のAPI
 
@@ -10,24 +16,33 @@ class API < Grape::API
     # まとめて100件の情報を渡す
     desc 'provide 100 events'
     get do
-      # TODO ちゃんと調べる
-      Event.all.limit(100)
+      Event.limit(100)
     end
-    # サークル・部活イベント一覧取得
+
+    # カテゴリごとの一覧取得
     desc 'show circle and club events'
-    get do
-      Event.where(type: 1)
+    params do
+      requires :category, type: String, desc: 'Category name'
     end
-    # 就活イベント一覧取得
-    desc 'show recruit events'
-    get do
-      Event.where(type: 2)
+    route_param :category do
+      get do
+        Event.where(type: Categories.params[:category])
+      end
     end
-  # セミナー・他イベント取得
+
+    # 指定イベント取得
+    desc 'get specified event'
+    params do
+      requires :id, type: Integer, desc: 'Event ID'
+    end
+    route_param :id do
+      get do
+        Event.where(params[:id])
+      end
+    end
   end
 
 
-  # 指定イベント取得
 
   # カフェ一覧取得
 
