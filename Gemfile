@@ -40,3 +40,6 @@ gem 'spring',        group: :development
 
 # API Support
 gem 'grape'
+
+# Authorize
+gem 'devise'

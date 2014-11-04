@@ -5,11 +5,27 @@ class API < Grape::API
   # 以下にAPIを書いていく
   # ホーム画面用のAPI
 
-  # サークル・部活イベント一覧取得
-
-  # 就活イベント一覧取得
-
+  # /api/v1/events
+  resource 'events' do
+    # まとめて100件の情報を渡す
+    desc 'provide 100 events'
+    get do
+      # TODO ちゃんと調べる
+      Event.all.limit(100)
+    end
+    # サークル・部活イベント一覧取得
+    desc 'show circle and club events'
+    get do
+      Event.where(type: 1)
+    end
+    # 就活イベント一覧取得
+    desc 'show recruit events'
+    get do
+      Event.where(type: 2)
+    end
   # セミナー・他イベント取得
+  end
+
 
   # 指定イベント取得
 
