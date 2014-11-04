@@ -3,10 +3,18 @@ class API < Grape::API
   version 'v1', using: :path
   format :json
 
-  module Categories
+  module EventCategories
     circles = 1
     recruitings = 2
     seminars = 3
+  end
+
+  module RestaurantCategories
+    cafe = 1
+    ramen = 2
+    restaurant = 3
+    sweets = 4
+    bar = 5
   end
   # 以下にAPIを書いていく
   # ホーム画面用のAPI
@@ -26,7 +34,37 @@ class API < Grape::API
     end
     route_param :category do
       get do
-        Event.where(type: Categories.params[:category])
+        Event.where(type: EventCategories.params[:category])
+      end
+    end
+
+    # 指定イベント取得
+    desc 'get specified event'
+    params do
+      requires :id, type: Integer, desc: 'Restaurant ID'
+    end
+    route_param :id do
+      get do
+        Event.where(params[:id])
+      end
+    end
+  end
+
+  resource 'restaurants' do
+    # 100件取得
+    desc 'provide 100 restaurants'
+    get do
+      Restaurant.limit(100)
+    end
+
+    # カテゴリごとの一覧
+    desc 'show restaurants'
+    params do
+      requires :category, type: String, desc: 'Category name'
+    end
+    route_param :category do
+      get do
+        Restaurant.where(type: RestaurantCategories.params[:category])
       end
     end
 
@@ -37,24 +75,10 @@ class API < Grape::API
     end
     route_param :id do
       get do
-        Event.where(params[:id])
+        Restaurant.where(params[:id])
       end
     end
   end
-
-
-
-  # カフェ一覧取得
-
-  # ラーメン一覧取得
-
-  # レストラン一覧取得
-
-  # パン・スイーツ一覧取得
-
-  # 居酒屋・バー一覧取得
-
-  # 指定飲食店詳細取得
 
   # 位置情報での検索結果取得
 
