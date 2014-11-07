@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141104111120) do
+ActiveRecord::Schema.define(version: 20141107134358) do
 
   create_table "events", force: true do |t|
     t.string   "title"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20141104111120) do
     t.string   "link"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "latitude",    limit: 24
+    t.float    "longtitude",  limit: 24
   end
 
   create_table "favorites", force: true do |t|
@@ -56,6 +58,8 @@ ActiveRecord::Schema.define(version: 20141104111120) do
     t.string   "link"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "latitude",        limit: 24
+    t.float    "longtitude",      limit: 24
   end
 
   create_table "reviews", force: true do |t|
@@ -87,6 +91,7 @@ ActiveRecord::Schema.define(version: 20141104111120) do
     t.string   "entrance_year"
     t.string   "circle"
     t.integer  "info_source"
+    t.string   "authentication_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
