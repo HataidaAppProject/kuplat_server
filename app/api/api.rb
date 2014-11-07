@@ -2,6 +2,20 @@ class API < Grape::API
   prefix :api
   version 'v1', using: :path
   format :json
+
+  module EventCategories
+    circles = 1
+    recruitings = 2
+    seminars = 3
+  end
+
+  module RestaurantCategories
+    cafe = 1
+    ramen = 2
+    restaurant = 3
+    sweets = 4
+    bar = 5
+  end
   # 以下にAPIを書いていく
   # ホーム画面用のAPI
 
@@ -10,36 +24,61 @@ class API < Grape::API
     # まとめて100件の情報を渡す
     desc 'provide 100 events'
     get do
-      # TODO ちゃんと調べる
-      Event.all.limit(100)
+      Event.limit(100)
     end
-    # サークル・部活イベント一覧取得
+
+    # カテゴリごとの一覧取得
     desc 'show circle and club events'
-    get do
-      Event.where(type: 1)
+    params do
+      requires :category, type: String, desc: 'Category name'
     end
-    # 就活イベント一覧取得
-    desc 'show recruit events'
-    get do
-      Event.where(type: 2)
+    route_param :category do
+      get do
+        Event.where(type: EventCategories.params[:category])
+      end
     end
-  # セミナー・他イベント取得
+
+    # 指定イベント取得
+    desc 'get specified event'
+    params do
+      requires :id, type: Integer, desc: 'Restaurant ID'
+    end
+    route_param :id do
+      get do
+        Event.where(params[:id])
+      end
+    end
   end
 
+  resource 'restaurants' do
+    # 100件取得
+    desc 'provide 100 restaurants'
+    get do
+      Restaurant.limit(100)
+    end
 
-  # 指定イベント取得
+    # カテゴリごとの一覧
+    desc 'show restaurants'
+    params do
+      requires :category, type: String, desc: 'Category name'
+    end
+    route_param :category do
+      get do
+        Restaurant.where(type: RestaurantCategories.params[:category])
+      end
+    end
 
-  # カフェ一覧取得
-
-  # ラーメン一覧取得
-
-  # レストラン一覧取得
-
-  # パン・スイーツ一覧取得
-
-  # 居酒屋・バー一覧取得
-
-  # 指定飲食店詳細取得
+    # 指定イベント取得
+    desc 'get specified event'
+    params do
+      requires :id, type: Integer, desc: 'Event ID'
+    end
+    route_param :id do
+      get do
+        Restaurant.where(params[:id])
+      end
+    end
+  end
 
   # 位置情報での検索結果取得
 
