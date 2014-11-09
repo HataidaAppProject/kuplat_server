@@ -2,7 +2,7 @@ class CreateEvents < ActiveRecord::Migration
   def change
     create_table :events do |t|
       t.string :title
-      t.integer :fav
+      t.integer :fav, :default => 0
       t.datetime :date
       t.string :place
       t.integer :price

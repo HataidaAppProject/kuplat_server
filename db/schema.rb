@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20141109115008) do
 
   create_table "events", force: true do |t|
     t.string   "title"
-    t.integer  "fav"
+    t.integer  "fav",                    default: 0
     t.datetime "date"
     t.string   "place"
     t.integer  "price"
