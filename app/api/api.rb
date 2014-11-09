@@ -110,6 +110,8 @@ class API < Grape::API
       event = Event.new(event_params)
       event.save
     end
+
+    # お気に入りの登録
   end
 
   resource 'restaurants' do
@@ -182,6 +184,4 @@ class API < Grape::API
     end
 
   end
-
-  # 認証関連のAPI
 end

@@ -23,5 +23,10 @@ module KuplatServer
     # Support API
     config.paths.add "app/api", glob: "**/*.rb"
     config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+
+    # 認証
+    config.to_prepare do
+      DeviseController.respond_to :json
+    end
   end
 end
