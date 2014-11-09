@@ -16,6 +16,29 @@ class API < Grape::API
     sweets = 4
     bar = 5
   end
+
+  helpers do
+    def event_params
+      ActionController::Parameters.new(params).permit(:title, :date, :place, :price, :category, :description, :image_path, :host, :contact, :link, :latitude, :longtitude)
+    end
+
+    # パラメタのチェック
+    params  :event_attributes do
+      requires :title, type: String, desc: 'Event Title'
+      requires :date, type: String, desc: 'Event Time'
+      requires :place, type: String, desc: 'Event Place'
+      requires :price, type: Integer, desc: 'Event Price'
+      requires :category, type: Integer, desc: 'Event Type'
+      requires :description, type: String, desc: 'Event Description'
+      requires :image_path, type: String, desc: 'Event image'
+      requires :host, type: String, desc: 'Event host'
+      requires :contact, type: String, desc: 'Contact'
+      optional :link, type: String, desc: 'link'
+      requires :latitude, type: Float, desc: 'Event latitude'
+      requires :longtitude, type: Float, desc: 'Event longtitude'
+    end
+  end
+
   # 以下にAPIを書いていく
   # ホーム画面用のAPI
 
@@ -58,6 +81,16 @@ class API < Grape::API
       delete do
         Event.find(params[:id]).destroy
       end
+    end
+
+    # イベント登録
+    desc 'create event'
+    params do
+      use :event_attributes
+    end
+    post do
+      event = Event.new(event_params)
+      event.save
     end
   end
 
