@@ -111,7 +111,25 @@ class API < Grape::API
       event.save
     end
 
+    # /api/v1/events/fav
     # お気に入りの登録
+    desc 'update fav'
+    params do
+      requires :event_id, type: Integer, desc: 'Event ID'
+      requires :user_id, type: Integer, desc: 'User ID'
+      requires :state, type: Integer, desc: 'fav status'
+    end
+    post 'fav' do
+      set_event
+      @favorite = favorites.first_or_initialize(favorite_params)
+      if @favorite.save
+        { message: 'Success'}
+      else
+        { message: 'Failed' }
+      end
+    end
+
+    # お気に入りの削除
   end
 
   resource 'restaurants' do
@@ -183,5 +201,19 @@ class API < Grape::API
       end
     end
 
+  end
+
+  private
+  def set_event
+    @event = Event.where(params[:event_id])
+  end
+
+  def favorites
+    current_user.favorites.where(@event.id)
+  end
+
+  def favorite_params
+    value = params.require(:favorite)
+    value.is_a?(Hash) ? value : {value: value}
   end
 end
