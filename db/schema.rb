@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109115008) do
+ActiveRecord::Schema.define(version: 20141109125248) do
 
   create_table "events", force: true do |t|
     t.string   "title"
-    t.integer  "fav"
+    t.integer  "fav",                    default: 0
     t.datetime "date"
     t.string   "place"
     t.integer  "price"
