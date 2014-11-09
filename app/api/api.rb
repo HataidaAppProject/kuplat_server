@@ -79,14 +79,25 @@ class API < Grape::API
       end
     end
 
-    # 指定イベント取得
-    desc 'get specified event'
+    # 指定レストラン取得
+    desc 'get specified restaurant'
     params do
-      requires :id, type: Integer, desc: 'Event ID'
+      requires :id, type: Integer, desc: 'Restaurant ID'
     end
     route_param :id do
       get do
         Restaurant.where(params[:id])
+      end
+    end
+
+    # 指定レストラン削除
+    desc 'delete specified restaurat'
+    params do
+      requires :id, type: Integer, desc: 'restaurat id'
+    end
+    route_param :id do
+      delete do
+        Restaurant.find(params[:id]).destroy
       end
     end
   end
