@@ -48,6 +48,17 @@ class API < Grape::API
         Event.where(params[:id])
       end
     end
+
+    # イベント削除
+    desc 'delete event'
+    params do
+      requires :id, type: Integer, desc: 'Event id'
+    end
+    route_param :id do
+    delete do
+      Event.find(params[:id]).destroy
+    end
+  end
   end
 
   resource 'restaurants' do
