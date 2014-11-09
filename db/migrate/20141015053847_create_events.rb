@@ -6,7 +6,7 @@ class CreateEvents < ActiveRecord::Migration
       t.datetime :date
       t.string :place
       t.integer :price
-      t.integer :type
+      t.integer :category
       t.text :description
       t.string :image_path
       t.string :host

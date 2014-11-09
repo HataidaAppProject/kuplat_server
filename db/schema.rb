@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20141104143052) do
     t.datetime "date"
     t.string   "place"
     t.integer  "price"
-    t.integer  "type"
+    t.integer  "category"
     t.text     "description"
     t.string   "image_path"
     t.string   "host"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20141104143052) do
 
   create_table "restaurants", force: true do |t|
     t.string   "name"
-    t.integer  "type"
+    t.integer  "category"
     t.float    "rate",            limit: 24
     t.string   "address"
     t.string   "image_path"
