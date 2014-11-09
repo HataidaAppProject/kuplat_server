@@ -16,6 +16,27 @@ class API < Grape::API
     sweets = 4
     bar = 5
   end
+
+  helpers do
+    def restaurant_params
+     ActionController::Parameters.new(params).permit(:name, :category, :address, :image_path, :business_hours, :phone_number, :regular_holiday, :link, :latitude, :longtitude)
+    end
+
+    # パラメタのチェック
+    params  :restaurant_attributes do
+      requires :name, type: String, desc: 'restaurant name'
+      requires :category, type: Integer, desc: 'restaurant category'
+      requires :address, type: String, desc: 'restaurant address'
+      requires :image_path, type: String, desc: 'restaurant image'
+      requires :business_hours, type: String, desc: 'restaurant business_hours'
+      requires :phone_number, type: String, desc: 'restaurant phone_number'
+      requires :regular_holiday, type: String, desc: 'restaurant regular_holiday'
+      optional :link, type: String, desc: 'link'
+      requires :latitude, type: Float, desc: 'Event latitude'
+      requires :longtitude, type: Float, desc: 'Event longtitude'
+    end
+  end
+
   # 以下にAPIを書いていく
   # ホーム画面用のAPI
 
@@ -100,6 +121,17 @@ class API < Grape::API
         Restaurant.find(params[:id]).destroy
       end
     end
+
+    # レストラン登録
+    desc 'create restaurat'
+    params do
+      use :restaurant_attributes
+    end
+    post do
+      restaurat = Restaurant.new(restaurant_params)
+      restaurat.save
+    end
+
   end
 
   # 位置情報での検索結果取得

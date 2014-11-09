@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109115008) do
+ActiveRecord::Schema.define(version: 20141109133643) do
 
   create_table "events", force: true do |t|
     t.string   "title"
-    t.integer  "fav"
+    t.integer  "fav",                    default: 0
     t.datetime "date"
     t.string   "place"
     t.integer  "price"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20141109115008) do
   create_table "restaurants", force: true do |t|
     t.string   "name"
     t.integer  "category"
-    t.float    "rate",            limit: 24
+    t.float    "rate",            limit: 24, default: 0.0
     t.string   "address"
     t.string   "image_path"
     t.string   "business_hours"
