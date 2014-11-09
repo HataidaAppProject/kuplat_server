@@ -3,7 +3,7 @@ class CreateRestaurants < ActiveRecord::Migration
     create_table :restaurants do |t|
       t.string :name
       t.integer :category
-      t.float :rate
+      t.float :rate, :default => 0
       t.string :address
       t.string :image_path
       t.string :business_hours
