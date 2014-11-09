@@ -2,6 +2,7 @@ class API < Grape::API
   prefix :api
   version 'v1', using: :path
   format :json
+  default_format :json
 
   module EventCategories
     circles = 1
@@ -16,6 +17,31 @@ class API < Grape::API
     sweets = 4
     bar = 5
   end
+
+  helpers do
+    def event_params
+      ActionController::Parameters.new(params).permit(:title, :date, :place, :price, :type, :description, :image_path, :host, :contact, :link, :latitude, :longtitude)
+    end
+
+    # パラメタのチェック
+    params  :event_attributes do
+      requires :title, type: String, desc: 'Event Title'
+      requires :date, type: String, desc: 'Event Time'
+      requires :place, type: String, desc: 'Event Place'
+      requires :price, type: Integer, desc: 'Event Price'
+      requires :type, type: Integer, desc: 'Event Type'
+      requires :description, type: String, desc: 'Event Description'
+      requires :image_path, type: String, desc: 'Event image'
+      requires :host, type: String, desc: 'Event host'
+      requires :contact, type: String, desc: 'Contact'
+      optional :link, type: String, desc: 'link'
+      requires :latitude, type: Float, desc: 'Event latitude'
+      requires :longtitude, type: Float, desc: 'Event longtitude'
+  end
+
+  end
+
+
   # 以下にAPIを書いていく
   # ホーム画面用のAPI
 
@@ -48,6 +74,17 @@ class API < Grape::API
         Event.where(params[:id])
       end
     end
+
+      # イベント登録APIの作成
+
+    desc 'create event'
+    params do
+      use :event_attributes
+    end
+    post do
+      event = Event.new(event_params)
+      event.save
+     end
   end
 
   resource 'restaurants' do
@@ -78,6 +115,8 @@ class API < Grape::API
         Restaurant.where(params[:id])
       end
     end
+
+
   end
 
   # 位置情報での検索結果取得
